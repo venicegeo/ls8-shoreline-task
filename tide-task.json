@@ -1,0 +1,74 @@
+{
+    "name": "ShorelineDetectionLS8_beta",
+    "version": "0.0.4",
+    "description": "Writes tide prediction JSON, shoreline GeoJSON, and NDWI GeoTIFF.",
+    "properties": {
+        "isPublic": true,
+        "timeout": 7200
+    },
+    "inputPortDescriptors": [
+        {
+            "name": "lat",
+            "type": "string",
+            "description": "Latitude of image centroid (tide prediction).",
+            "required": true
+        },
+        {
+            "name": "lon",
+            "type": "string",
+            "description": "Longitude of image centroid (tide prediction).",
+            "required": true
+        },
+        {
+            "name": "dtg",
+            "type": "string",
+            "description": "Date time group (Y-m-d-H-M) of image collection (tide prediction).",
+            "required": true
+        },
+        {
+            "name": "meta",
+            "type": "string",
+            "description": "Acquisition metadata.",
+            "required": true
+        },
+        {
+            "name": "minsize",
+            "type": "string",
+            "description": "Minimum coastline enclosed area/speckle suppression. (Default: 1000.0 pixels)",
+            "required": false
+        },
+        {
+            "name": "smooth",
+            "type": "string",
+            "description": "Corner smoothing from 0 (no smoothing) to 1.33 (no corners). (Default: 1.0)",
+            "required": false
+        },
+        {
+            "name": "image",
+            "type": "directory",
+            "description": "The multispectral image (NDWI and shoreline detection).",
+            "required": true
+        }
+    ],
+    "outputPortDescriptors": [
+        {
+            "name": "vector",
+            "type": "directory",
+            "description": "Output directory containing vector data."
+        },
+        {
+            "name": "raster",
+            "type": "directory",
+            "description": "Output directory containing NDWI raster."
+        }
+    ],
+    "containerDescriptors": [
+        {
+            "type": "DOCKER",
+            "properties": {
+                "image": "venicegeo/shoreline-task-ls8"
+            },
+            "command": "python /shoreline-task.py"
+        }
+    ]
+}
